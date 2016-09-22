@@ -1,3 +1,6 @@
 ShoppingBasket/.idea/*
 Interlace/.idea/*
 *.iml
+target
+*~
+.idea
