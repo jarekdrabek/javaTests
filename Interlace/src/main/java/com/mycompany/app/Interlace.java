@@ -4,7 +4,6 @@ import com.beust.jcommander.internal.Lists;
 import com.google.common.primitives.Chars;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 
 public class Interlace {
