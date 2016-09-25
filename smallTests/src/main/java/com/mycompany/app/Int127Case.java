@@ -1,7 +1,8 @@
 package com.mycompany.app;
 
 public class Int127Case {
-    public static void main( String[] args ) {
+//    http://stackoverflow.com/questions/1700081/why-does-128-128-return-false-but-127-127-return-true-when-converting-to-integ
+    public static void main( String[] args ) { //From -128 to 127   look into Integer.valueOf implementation
         Integer a = 10;
         Integer b = 10;
         System.out.println(a==b);
