@@ -9,26 +9,15 @@ public class DoubleCheckLockingSingleton {
         }
 
     }
-}
 
-class MyRunnable implements Runnable {
+    private static volatile DoubleCheckLockingSingleton _instance;
 
-    @Override
-    public void run() {
-        VolatileExample.getInstance();
-    }
-}
-
-class VolatileExample {
-
-    private static volatile VolatileExample _instance;
-
-    public static VolatileExample getInstance(){
+    public static DoubleCheckLockingSingleton getInstance(){
         if(_instance==null){
-            synchronized (VolatileExample.class){
+            synchronized (DoubleCheckLockingSingleton.class){
                 if(_instance==null){
                     System.out.println(String.format("Thread: %s , Instance is null ",Thread.currentThread().getName()));
-                    _instance = new VolatileExample();
+                    _instance = new DoubleCheckLockingSingleton();
                 }
             }
         }
@@ -36,7 +25,15 @@ class VolatileExample {
         return _instance;
     }
 
-    private VolatileExample() {
+    private DoubleCheckLockingSingleton() {
+    }
+
+    static class MyRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            DoubleCheckLockingSingleton.getInstance();
+        }
     }
 
 }
