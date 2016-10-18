@@ -17,8 +17,9 @@ public class CountDownLatchExample {
 
         @Override
         public void run() {
-            System.out.println(String.format("%s : I am done!", Thread.currentThread().getName()));
+            System.out.println(String.format("%s : Before count down!", Thread.currentThread().getName()));
             countDownLatch.countDown();
+            System.out.println(String.format("%s : I am done!", Thread.currentThread().getName()));
         }
     }
 
@@ -27,6 +28,7 @@ public class CountDownLatchExample {
         @Override
         public void run() {
             try {
+                System.out.println(String.format("%s : I am before await", Thread.currentThread().getName()));
                 countDownLatch.await();
                 System.out.println(String.format("%s : I am final one and I am done!", Thread.currentThread().getName()));
             } catch (InterruptedException e) {
@@ -34,7 +36,5 @@ public class CountDownLatchExample {
             }
         }
     }
-
-
 
 }
