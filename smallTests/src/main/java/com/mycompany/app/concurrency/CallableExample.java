@@ -4,7 +4,7 @@ import java.util.concurrent.*;
 
 public class CallableExample {
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
 
         Callable<Integer> task = () -> {
             System.out.println("Executing callable");
@@ -15,7 +15,7 @@ public class CallableExample {
         Future<Integer> taskResult = Executors.newSingleThreadExecutor().submit(task);
         TimeUnit.SECONDS.sleep(2);
         System.out.println("Do we have result? :"+ taskResult.isDone());
-        Integer result = taskResult.get();
+        Integer result = taskResult.get(5, TimeUnit.SECONDS);
         System.out.println("Do we have result? :"+ taskResult.isDone());
         System.out.println("Result:"+result);
         System.out.println("Program finished");
