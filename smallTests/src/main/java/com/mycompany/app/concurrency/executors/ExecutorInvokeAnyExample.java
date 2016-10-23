@@ -1,4 +1,4 @@
-package com.mycompany.app.concurrency;
+package com.mycompany.app.concurrency.executors;
 
 import java.util.Arrays;
 import java.util.Collection;
