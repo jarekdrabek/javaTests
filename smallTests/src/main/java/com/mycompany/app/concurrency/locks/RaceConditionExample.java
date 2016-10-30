@@ -1,4 +1,6 @@
-package com.mycompany.app.concurrency;
+package com.mycompany.app.concurrency.locks;
+
+import com.mycompany.app.concurrency.ConcurrencyUtils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

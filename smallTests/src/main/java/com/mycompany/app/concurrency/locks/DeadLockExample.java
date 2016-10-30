@@ -1,4 +1,4 @@
-package com.mycompany.app.concurrency;
+package com.mycompany.app.concurrency.locks;
 
 import java.util.concurrent.TimeUnit;
 
