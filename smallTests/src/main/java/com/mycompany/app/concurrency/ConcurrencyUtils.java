@@ -26,4 +26,14 @@ public class ConcurrencyUtils {
             throw new IllegalStateException(e);
         }
     }
+
+    public static void sleep(long amount, TimeUnit timeUnit){
+        try {
+            timeUnit.sleep(amount);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+
 }
