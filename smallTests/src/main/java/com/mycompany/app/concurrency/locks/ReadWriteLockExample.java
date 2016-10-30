@@ -22,20 +22,28 @@ public class ReadWriteLockExample {
         executorService.submit(() -> {
             IntStream.range(0,100)
                     .forEach(i -> {
-                        lock.writeLock().lock(); //comment theese line to see what happened without
-                        System.out.println(String.format("Writing %s to map", i));
-                        map.put("key", "val"+i);
-                        lock.writeLock().unlock(); //comment theese line to see what happened without
+                        try{
+                            lock.writeLock().lock(); //comment theese line to see what happened without
+                            System.out.println(String.format("Writing %s to map", i));
+                            sleep(2);
+                            map.put("key", "val"+i);
+
+                        } finally {
+                            lock.writeLock().unlock(); //comment theese line to see what happened without
+                        }
                         sleep(4);
                     });
         });
 
         Runnable readTask = () -> {
             while(true){
-                lock.readLock().lock();  //comment theese line to see what happened without
-                sleep(100, TimeUnit.MILLISECONDS);
-                System.out.println(String.format("key=%s", map.get("key")));
-                lock.readLock().unlock(); //comment theese line to see what happened without
+                try {
+                    lock.readLock().lock();  //comment theese line to see what happened without
+                    sleep(100, TimeUnit.MILLISECONDS);
+                    System.out.println(String.format("key=%s", map.get("key")));
+                } finally {
+                    lock.readLock().unlock(); //comment theese line to see what happened without
+                }
             }
         };
 
