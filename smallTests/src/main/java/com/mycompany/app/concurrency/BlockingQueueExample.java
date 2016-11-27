@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class BlockingQueueExample {
 
     public static void main(String[] args) {
-        BlockingQueue<String> blockingQueue = new LinkedBlockingDeque<>();
+        BlockingQueue<String> blockingQueue = new LinkedBlockingDeque<>(5);
         new Thread(new Producer(blockingQueue)).start();
         new Thread(new Consumer(blockingQueue)).start();
     }
