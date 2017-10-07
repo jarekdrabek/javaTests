@@ -6,20 +6,29 @@ import java.util.Optional;
 
 public class MyLinkedList<T>{
 
-    private Node<T> firstElement;
-    private Node<T> lastElement;
+    private Optional<Node<T>> firstElement = Optional.empty();
+    private Optional<Node<T>> lastElement = Optional.empty();
     private int size;
 
     public void add(T value) {
+        Objects.requireNonNull(value);
         Node<T> newNode = Node.createNode(value);
-        if(firstElement == null){
-            this.firstElement = newNode;
-            this.lastElement = newNode;
+        if(!firstElement.isPresent()){
+            setFirstElement(newNode);
+            setLastElement(newNode);
         } else {
-            this.lastElement.setNext(newNode);
-            this.lastElement = newNode;
+            this.lastElement.get().setNext(newNode);
+            setLastElement(newNode);
         }
         size++;
+    }
+
+    public void setFirstElement(Node<T> firstElement) {
+        this.firstElement = Optional.of(firstElement);
+    }
+
+    public void setLastElement(Node<T> lastElement) {
+        this.lastElement = Optional.of(lastElement);
     }
 
     public T get(int index) {
@@ -27,7 +36,7 @@ public class MyLinkedList<T>{
     }
 
     private Node<T> getNode(int index) {
-        Optional<Node<T>> element = Optional.ofNullable(firstElement);
+        Optional<Node<T>> element = firstElement;
         while(index>0) {
             element = element.orElseThrow(IndexOutOfBoundsException::new).getNext();
             index--;
@@ -39,24 +48,31 @@ public class MyLinkedList<T>{
         if(size == 0)
             throw new IndexOutOfBoundsException();
         else if(size == 1){
-            firstElement = null;
-            firstElement = null;
+            firstElement = Optional.empty();
+            firstElement = Optional.empty();
         } else {
             Node<T> toRemove = getNode(index);
-            if(isFirstElement(toRemove)){
-                firstElement = firstElement.getNext().orElseThrow(IllegalStateException::new);
+            if(isFirstElement(toRemove)) {
+                setFirstElement(firstElement.get().getNext().get());
+            } else if(isLastElement(toRemove)){
+                Node<T> oneBeforeRemovedOne = getNode(index - 1);
+                oneBeforeRemovedOne.setEmpty();
+                setLastElement(oneBeforeRemovedOne);
             } else {
-                Node<T> newLast = getNode(index - 1);
-                newLast.setNext(toRemove.getNext().orElse(null));
-                this.lastElement = newLast;
+                Node<T> oneBeforeRemovedOne = getNode(index - 1);
+                oneBeforeRemovedOne.setNext(toRemove.getNext().get());
             }
         }
         size--;
 
     }
 
+    private boolean isLastElement(Node<T> node) {
+        return Optional.of(node).equals(lastElement);
+    }
+
     private boolean isFirstElement(Node<T> node) {
-        return node.equals(firstElement);
+        return Optional.of(node).equals(firstElement);
     }
 
 
@@ -82,7 +98,11 @@ public class MyLinkedList<T>{
         }
 
         public void setNext(Node<T> next) {
-            this.next = Optional.ofNullable(next);
+            this.next = Optional.of(next);
+        }
+
+        public void setEmpty() {
+            this.next = Optional.empty();
         }
 
         @Override
