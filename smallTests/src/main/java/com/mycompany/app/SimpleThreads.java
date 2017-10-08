@@ -7,10 +7,6 @@ public class SimpleThreads {
         System.out.println("Thread!! Name:" + Thread.currentThread().getName());
         new MyThread().start();
         new MyThread().start();
-
-        new Thread(() -> {
-            System.out.println("BleBle");
-        }).start();
     }
 
     static class MyThread extends Thread {
@@ -42,7 +38,6 @@ public class SimpleThreads {
             System.out.println("MyThread: Name:" + Thread.currentThread().getName() + "-> Message: " + msg);
         }
     }
-
 
     static class MyRunnable implements Runnable {
         @Override
